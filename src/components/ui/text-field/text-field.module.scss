@@ -1,0 +1,149 @@
+input {
+  all: unset;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.label {
+  color: var(--color-dark-100);
+}
+
+.fieldContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-dark-300);
+}
+
+.field {
+  cursor: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  padding: 6px 40px 6px 12px;
+
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  border-radius: 2px;
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-dark-500);
+
+  transition: 0.3s;
+
+  &::placeholder {
+    color: var(--color-dark-100);
+  }
+
+  &:disabled {
+    color: var(--color-dark-300);
+    opacity: 0.5;
+  }
+
+  &:focus,
+  &:active:enabled {
+    box-shadow: 0 0 0 1px var(--color-light-100);
+
+    &::placeholder {
+      color: var(--color-dark-100);
+    }
+  }
+
+  &:hover:not(&:disabled) {
+    background-color: var(--color-dark-700);
+  }
+
+  &.error {
+    color: var(--color-danger-300);
+    box-shadow: 0 0 0 1px var(--color-danger-300);
+
+    &::placeholder {
+      color: var(--color-danger-300);
+    }
+  }
+
+  &[data-icon*="start"] {
+    padding-left: 36px;
+  }
+
+  &[data-icon*="end"] {
+    padding-right: 36px;
+  }
+}
+
+.iconButton {
+  all: unset;
+
+  cursor: pointer;
+
+  position: absolute;
+  right: 10px;
+
+  display: flex;
+
+  border-radius: 100%;
+
+  transition: 0.4s;
+
+  &:hover {
+    background-color: var(--color-dark-300);
+  }
+
+  &.disabled {
+    cursor: unset;
+    color: var(--color-dark-300);
+  }
+}
+
+.iconStart {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  color: var(--color-dark-100);
+
+  &:has(~ .input:focus) {
+    color: var(--color-warning-500);
+  }
+}
+
+.iconEnd {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+
+  display: grid;
+  place-items: center;
+
+  width: 20px;
+  height: 20px;
+}
+
+.iconDisabled {
+  color: var(--color-dark-300);
+}
+
+.clearButton {
+  all: unset;
+
+  cursor: pointer;
+
+  position: absolute;
+  right: 5px;
+
+  width: 20px;
+  height: 20px;
+}

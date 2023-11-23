@@ -1,0 +1,146 @@
+@mixin typography($fontSize, $lineHeight, $fontWeight) {
+  margin: 0;
+
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  line-height: $lineHeight;
+  color: var(--color-text-primary);
+}
+
+.large {
+  @include typography(
+    var(--font-size-xxl),
+    var(--line-height-l),
+    var(--font-weight-bold)
+  );
+}
+
+.h1 {
+  @include typography(
+    var(--font-size-xl),
+    var(--line-height-l),
+    var(--font-weight-bold)
+  );
+}
+
+.h2 {
+  @include typography(
+    var(--font-size-l),
+    var(--line-height-m),
+    var(--font-weight-bold)
+  );
+}
+
+.h3 {
+  @include typography(
+    var(--font-size-m),
+    var(--line-height-m),
+    var(--font-weight-bold)
+  );
+}
+
+.body_1 {
+  @include typography(
+    var(--font-size-m),
+    var(--line-height-m),
+    var(--font-weight-regular)
+  );
+}
+
+.body_2 {
+  @include typography(
+    var(--font-size-s),
+    var(--line-height-m),
+    var(--font-weight-regular)
+  );
+}
+
+.subtitle_1 {
+  @include typography(
+    var(--font-size-m),
+    var(--line-height-m),
+    var(--font-weight-bold)
+  );
+}
+
+.subtitle_2 {
+  @include typography(
+    var(--font-size-s),
+    var(--line-height-m),
+    var(--font-weight-bold)
+  );
+}
+
+.caption {
+  @include typography(
+    var(--font-size-xs),
+    var(--line-height-s),
+    var(--font-weight-regular)
+  );
+}
+
+.overline {
+  @include typography(
+    var(--font-size-xs),
+    var(--line-height-s),
+    var(--font-weight-bold)
+  );
+}
+
+.link_1 {
+  @include typography(
+    var(--font-size-s),
+    var(--line-height-m),
+    var(--font-weight-regular)
+  );
+
+  cursor: pointer;
+  color: var(--primary-500, #397df6);
+  text-decoration-line: underline;
+}
+
+.link_2 {
+  @include typography(
+    var(--font-size-xs),
+    var(--line-height-s),
+    var(--font-weight-regular)
+  );
+
+  cursor: pointer;
+  color: var(--primary-500, #397df6);
+  text-decoration-line: underline;
+}
+
+.error {
+  @include typography(
+    var(--font-size-xs),
+    var(--line-height-m),
+    var(--font-weight-regular)
+  );
+
+  color: var(--color-danger-300);
+}
+
+.primary {
+  color: var(--color-light-100);
+}
+
+.secondary {
+  color: var(--color-dark-900);
+}
+
+.inherit {
+  color: var(--color-dark-100);
+}
+
+.link {
+  color: var(--color-info-500);
+}
+
+.tertiary {
+  color: var(--color-accent-500);
+}
+
+.form {
+  color: var(--color-light-900);
+}
