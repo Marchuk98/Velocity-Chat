@@ -1,0 +1,14 @@
+.navBar {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  height: 60px;
+  justify-content: space-between;
+  background-color: var(--color-accent-500);
+
+  .user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+}
