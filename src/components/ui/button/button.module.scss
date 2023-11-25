@@ -1,6 +1,6 @@
 @mixin button(
   $color: var(--color-light-100),
-  $bgColor: var(--color-accent-500),
+  $bgColor: var(--color-accent-100),
   $boxShadow: 0 4px 18px 0 rgb(140 97 255 / 35%)
 ) {
   all: unset;
@@ -116,7 +116,7 @@
 
 .link {
   @include button(
-    $color: var(--color-accent-500),
+    $color: var(--color-light-900),
     $bgColor: none,
     $boxShadow: none
   );
@@ -130,7 +130,7 @@
   }
 
   &:hover {
-    color: var(--color-accent-300);
+    color: var(--color-dark-300);
   }
 
   &:active {

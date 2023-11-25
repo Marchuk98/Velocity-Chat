@@ -10,7 +10,9 @@ type NavBarPropsType = {
 export const NavBar = ({ name }: NavBarPropsType) => {
   return (
     <div className={s.navBar}>
-      <Typography variant={"body_2"}>Mini Chat</Typography>
+      <Typography className={s.logo} variant={"body_2"}>
+        Mini Chat
+      </Typography>
       <div className={s.user}>
         <UserAvatar
           name={name}

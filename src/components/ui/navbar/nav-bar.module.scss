@@ -1,3 +1,5 @@
+@import "../../../styles/mixins";
+
 .navBar {
   display: flex;
   align-items: center;
@@ -5,6 +7,12 @@
   height: 60px;
   justify-content: space-between;
   background-color: var(--color-accent-500);
+
+  .logo {
+    @include tablet {
+      display: none;
+    }
+  }
 
   .user {
     display: flex;

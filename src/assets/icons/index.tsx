@@ -3,3 +3,4 @@ export * from "./EyeOff";
 export * from "./Search";
 export * from "./Close";
 export * from "./Check";
+export * from "./Camera";

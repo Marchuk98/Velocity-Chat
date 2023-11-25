@@ -4,3 +4,21 @@
   align-items: $align;
   justify-content: $justify;
 }
+
+@mixin mobile {
+  @media screen and (width <= 480px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (width <= 768px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media screen and (width <= 1200px) {
+    @content;
+  }
+}
