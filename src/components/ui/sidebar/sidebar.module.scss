@@ -1,0 +1,14 @@
+@import "../../../styles/mixins";
+
+.sideBar {
+  flex: 1;
+  background-color: var(--color-accent-100);
+  position: relative;
+
+  button {
+    @include tablet {
+      position: absolute;
+      bottom: 10px;
+    }
+  }
+}
