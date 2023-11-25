@@ -1,0 +1,23 @@
+@import "../../styles/mixins";
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .container {
+    width: 65%;
+    height: 80%;
+    overflow: hidden;
+
+    @include tablet {
+      width: 90%;
+    }
+  }
+
+  .mainWrapper {
+    display: flex;
+    height: 100%;
+  }
+}
