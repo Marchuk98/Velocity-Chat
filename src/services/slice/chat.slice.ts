@@ -26,12 +26,15 @@ export const chatSlice = createSlice({
       action: PayloadAction<{ user: ChatInitialStateType["user"] }>,
     ) => {
       const { user } = action.payload;
-      const { uid: currentUserId } = auth.currentUser || {};
+      const currentUser = auth.currentUser;
 
-      if (currentUserId && user.uid) {
-        state.chatId = [currentUserId, user.uid].sort().join("_");
-        state.user = { ...user };
+      if (currentUser) {
+        state.chatId =
+          currentUser.uid > user.uid
+            ? `${currentUser.uid}${user.uid}`
+            : `${user.uid}${currentUser.uid}`;
       }
+      state.user = { ...user };
     },
   },
 });
