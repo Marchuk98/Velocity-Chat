@@ -25,27 +25,35 @@ export const UseProfile = () => {
       }
 
       const storageReference = storageRef(storage, `avatars/${user.uid}`);
-
       const uploadTask = uploadBytesResumable(storageReference, file);
 
-      uploadTask.on("state_changed", async () => {
-        try {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (error) => {
+          console.error("Error during upload:", error);
+        },
+        async () => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-          setAvatar(downloadURL);
-          await updateProfile(user, {
-            photoURL: downloadURL,
-          });
-          await setDoc(doc(db, "userAvatar", user.uid), {
-            avatar: downloadURL,
-          });
-          setAvatar(downloadURL);
-        } catch (err) {
-          console.error("Error handling upload state:", err);
-        }
-      });
+            setAvatar(downloadURL);
+            await updateProfile(user, {
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, "users", user.uid), {
+              displayName: user.displayName,
+              email: user.email,
+              photoURL: downloadURL,
+              uid: user.uid,
+            });
+          } catch (err) {
+            console.error("Error after upload:", err);
+          }
+        },
+      );
     } catch (err) {
-      console.error("Error uploading file:", err);
+      console.error("Error starting upload:", err);
     }
   };
 
@@ -59,19 +67,20 @@ export const UseProfile = () => {
     if (auth.currentUser) {
       const user = auth.currentUser;
 
-      getDoc(doc(db, "user", user.uid)).then((doc) => {
+      getDoc(doc(db, "users", user.uid)).then((doc) => {
         if (doc.exists()) {
           setUsername(doc.data().displayName);
-        }
-      });
+          const photoURL = doc.data().photoURL;
 
-      getDoc(doc(db, "userAvatar", user.uid)).then((doc) => {
-        if (doc.exists()) {
-          setAvatar(doc.data().avatar);
+          if (photoURL) {
+            setAvatar(photoURL);
+          } else {
+            setAvatar("");
+          }
         }
       });
     }
-  }, [avatar]);
+  }, []);
 
   const handleSignOut = async () => {
     try {
