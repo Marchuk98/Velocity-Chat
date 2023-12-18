@@ -2,5 +2,28 @@
   background-color: #d9d7d7;
   padding: 10px;
   height: calc(100% - 130px);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #eee;
+  }
+}
+
+.dialogsChats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 60vh;
+  color: black;
 }
