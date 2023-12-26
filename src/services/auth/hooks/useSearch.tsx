@@ -17,8 +17,9 @@ import { auth, db } from "../../firebase/firebase";
 export const UseSearch = () => {
   const [username, setUsername] = useState<string>("");
   const [user, setUser] = useState<any | null>(null);
-
+  const [loading, setLoading] = useState(false);
   const handleSearch = async () => {
+    setLoading(true);
     const q = query(
       collection(db, "users"),
       where("displayName", "==", username),
@@ -28,10 +29,14 @@ export const UseSearch = () => {
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
-        setUser(doc.data());
+        if (doc.data().uid !== auth.currentUser?.uid) {
+          setUser(doc.data());
+        }
       });
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,6 +56,7 @@ export const UseSearch = () => {
         : user.uid + currentUser.uid;
 
     try {
+      setLoading(true);
       const res = await getDoc(doc(db, "chats", combineId));
 
       if (!res.exists()) {
@@ -76,6 +82,8 @@ export const UseSearch = () => {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
     setUser(null);
     setUsername("");
@@ -85,6 +93,7 @@ export const UseSearch = () => {
     handleKey,
     handleSearch,
     handleSelect,
+    loading,
     setUsername,
     user,
     username,
