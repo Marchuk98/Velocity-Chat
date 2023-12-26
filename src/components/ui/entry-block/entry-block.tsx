@@ -14,7 +14,7 @@ import {
   getDoc,
   serverTimestamp,
   setDoc,
-  updateDoc
+  updateDoc,
 } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
 
@@ -33,7 +33,12 @@ export const EntryBlock = () => {
 
   const handleSend = async (messageData: any) => {
     const currentUser = auth.currentUser;
-    if (!messageData.cover && (!text || !text.trim()) && (!messageData.text || !messageData.text.trim())) {
+
+    if (
+      !messageData.cover &&
+      (!text || !text.trim()) &&
+      (!messageData.text || !messageData.text.trim())
+    ) {
       return;
     }
 
@@ -56,21 +61,21 @@ export const EntryBlock = () => {
         id: uuid(),
         img: messageData.cover || "",
         senderId: currentUser.uid,
-        text: messageData.text || text
+        text: messageData.text || text,
       };
 
       await updateDoc(chatDocRef, {
-        messages: arrayUnion(messageObject)
+        messages: arrayUnion(messageObject),
       });
 
       await updateDoc(doc(db, "userChat", currentUser.uid), {
         [chatId + ".date"]: serverTimestamp(),
-        [chatId + ".lastMessage"]: { text }
+        [chatId + ".lastMessage"]: { text },
       });
 
       await updateDoc(doc(db, "userChat", userId), {
         [chatId + ".date"]: serverTimestamp(),
-        [chatId + ".lastMessage"]: { text }
+        [chatId + ".lastMessage"]: { text },
       });
 
       dispatch(setMessageText(""));

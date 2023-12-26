@@ -31,7 +31,7 @@ export const UseProfile = () => {
 
       uploadTask.on(
         "state_changed",
-        (snapshot) => {},
+        () => {},
         (error) => {
           setLoading(false);
           console.error("Error during upload:", error);

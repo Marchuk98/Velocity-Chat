@@ -1,10 +1,11 @@
 import { useRef } from "react";
+
+import { Logo } from "@/assets/icons/Logo";
 import { Logout } from "@/assets/icons/Logout";
 import { MainLoader } from "@/assets/loaders/main-loader";
 import { Button, Typography } from "@/components/ui";
 import { UserAvatar } from "@/components/ui/avatar/avatar";
 import { UseProfile } from "@/services/auth/hooks/useProfile";
-import { Logo } from "@/assets/icons/Logo";
 
 import s from "./nav-bar.module.scss";
 

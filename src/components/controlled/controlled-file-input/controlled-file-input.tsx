@@ -4,12 +4,12 @@ import {
   UseControllerProps,
   useController,
 } from "react-hook-form";
-import preview from "../../../assets/images/upload-file.png";
+
 import { useCreateBlob } from "@/common/constants/useBlob";
 
 import s from "./controlled-file-input.module.scss";
 
-
+import preview from "../../../assets/images/upload-file.png";
 
 type FileInputPropsType<T extends FieldValues> = {
   children: (onClick: () => void) => JSX.Element;
@@ -56,7 +56,8 @@ export const ControlledFileInput = <T extends FieldValues>({
   const addMediaFileHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
       setPreviewImage(undefined);
-      onChange(undefined)
+      onChange(undefined);
+
       return;
     }
     setPreviewImage(e.target.files[0]);
