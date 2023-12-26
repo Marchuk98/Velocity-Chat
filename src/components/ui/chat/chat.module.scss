@@ -1,5 +1,6 @@
 .chat {
   flex: 2;
+  background-color: #d9d7d7;
 
   .chatInfo {
     display: flex;
@@ -13,5 +14,13 @@
   .chatIcons {
     display: flex;
     gap: 10px;
+  }
+
+  .chatPlaceholder{
+    color: var(--color-dark-900);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
   }
 }
