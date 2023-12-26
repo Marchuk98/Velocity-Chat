@@ -15,9 +15,11 @@ export const UseProfile = () => {
   const navigate = useNavigate();
   const [avatar, setAvatar] = useState("");
   const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const uploadAvatar = async (file: File) => {
     try {
+      setLoading(true);
       const user = auth.currentUser;
 
       if (!user) {
@@ -31,6 +33,7 @@ export const UseProfile = () => {
         "state_changed",
         (snapshot) => {},
         (error) => {
+          setLoading(false);
           console.error("Error during upload:", error);
         },
         async () => {
@@ -47,12 +50,15 @@ export const UseProfile = () => {
               photoURL: downloadURL,
               uid: user.uid,
             });
+            setLoading(false);
           } catch (err) {
+            setLoading(false);
             console.error("Error after upload:", err);
           }
         },
       );
     } catch (err) {
+      setLoading(false);
       console.error("Error starting upload:", err);
     }
   };
@@ -95,6 +101,7 @@ export const UseProfile = () => {
     avatar,
     handleFileChange,
     handleSignOut,
+    loading,
     username,
   };
 };

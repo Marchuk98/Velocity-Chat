@@ -4,8 +4,6 @@ export function useCreateBlob(fileUrl: string) {
   const [blob, setBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
-  console.log("blob", blob);
-
   useEffect(() => {
     const fetchBlob = async () => {
       try {
@@ -15,8 +13,6 @@ export function useCreateBlob(fileUrl: string) {
           new Error("Failed to fetch the file");
         }
         const arrayBuffer = await response.arrayBuffer();
-
-        console.log("arrayBuffer", arrayBuffer);
 
         setBlob(
           new Blob([arrayBuffer], {

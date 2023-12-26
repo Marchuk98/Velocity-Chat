@@ -1,9 +1,9 @@
-import { MainFormChats } from "@/components/main-form-chats/main-form-chats";
+import { Outlet } from "react-router-dom";
 
 export function App() {
   return (
-    <div>
-      <MainFormChats />
-    </div>
+    <>
+      <Outlet />
+    </>
   );
 }

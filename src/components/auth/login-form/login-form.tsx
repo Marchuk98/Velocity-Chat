@@ -1,4 +1,5 @@
 import { LoginFormInputs, useLoginForm } from "@/common";
+import { PATH } from "@/common/constants/route-path";
 
 import s from "./login-form.module.scss";
 
@@ -44,15 +45,6 @@ export const LoginForm = (props: LoginFormProps) => {
           label={"Remember me"}
           name={"rememberMe"}
         />
-        <Typography
-          as={"a"}
-          className={s.forgotPassword}
-          href={""}
-          variant={"body_2"}
-        >
-          Forgot password?
-        </Typography>
-
         <Button fullWidth type={"submit"}>
           Sign In
         </Button>
@@ -62,7 +54,7 @@ export const LoginForm = (props: LoginFormProps) => {
         <Typography
           as={"a"}
           className={s.signUpLink}
-          href={""}
+          href={PATH.REGISTRATION}
           variant={"link_1"}
         >
           Sign Up

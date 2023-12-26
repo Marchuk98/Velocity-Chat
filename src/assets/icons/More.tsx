@@ -14,7 +14,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         "M13.5 12a1.5 1.5 0 1 1-1.5-1.5 1.5 1.5 0 0 1 1.5 1.5Zm4.5-1.5a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5Zm-12 0A1.5 1.5 0 1 0 7.5 12 1.5 1.5 0 0 0 6 10.5Z"
       }
       style={{
-        fill: "#4c4c4c",
+        fill: "#8C8989FF",
       }}
     />
   </svg>

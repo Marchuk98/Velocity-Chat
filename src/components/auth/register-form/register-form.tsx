@@ -1,3 +1,4 @@
+import { PATH } from "@/common/constants/route-path";
 import { RegisterFormInputs, UseRegisterForm } from "@/common/schemas";
 import { ControlledTextField } from "@/components/controlled";
 import { Button } from "@/components/ui/button/button";
@@ -16,7 +17,11 @@ export const RegisterForm = (props: RegisterFormProps) => {
   const { control, handleSubmit, reset } = UseRegisterForm();
 
   const onSubmit = handleSubmit((data) => {
-    onSubmitHandler({ email: data.email, password: data.password });
+    onSubmitHandler({
+      email: data.email,
+      name: data.name,
+      password: data.password,
+    });
     reset();
   });
 
@@ -27,6 +32,13 @@ export const RegisterForm = (props: RegisterFormProps) => {
       </Typography>
 
       <form onSubmit={onSubmit}>
+        <ControlledTextField
+          autoComplete={"name"}
+          className={s.textField}
+          control={control}
+          label={"name"}
+          name={"name"}
+        />
         <ControlledTextField
           autoComplete={"username"}
           className={s.textField}
@@ -63,7 +75,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
         <Typography
           as={"a"}
           className={s.signInLink}
-          href={""}
+          href={PATH.LOGIN}
           variant={"link_1"}
         >
           Sign In

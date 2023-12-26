@@ -15,11 +15,7 @@ const schema = z.object({
     .nonempty("Enter password")
     .min(3, "Password must be at least 3 character")
     .max(30, "Password must be no more 30 character"),
-  rememberMe: z.literal<boolean>(true, {
-    errorMap: () => {
-      return { message: "You must agree to the terms and condition" };
-    },
-  }),
+  rememberMe: z.boolean().optional(),
 });
 
 export type LoginFormInputs = z.infer<typeof schema>;

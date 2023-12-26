@@ -116,7 +116,7 @@
 
 .link {
   @include button(
-    $color: var(--color-light-900),
+    $color: var(--color-light-500),
     $bgColor: none,
     $boxShadow: none
   );
@@ -130,7 +130,7 @@
   }
 
   &:hover {
-    color: var(--color-dark-300);
+    color: var(--color-dark-100);
   }
 
   &:active {

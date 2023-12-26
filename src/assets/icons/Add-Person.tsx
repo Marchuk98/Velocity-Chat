@@ -2,7 +2,7 @@ import { SVGProps, memo } from "react";
 
 const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    fill={"#4c4c4c"}
+    fill={"#8C8989FF"}
     height={24}
     viewBox={"0 0 512 512"}
     width={24}

@@ -28,9 +28,7 @@ export const BlurHashCanvas = ({
 
   return (
     <>
-      <div
-        style={{ display: imageLoaded ? "none" : "inline" }}
-      >
+      <div style={{ display: imageLoaded ? "none" : "inline" }}>
         <ImportedBlurHashCanvas
           hash={"L37nC1M_00s?-BaepJX50cog^nWA"}
           height={blurHeight}

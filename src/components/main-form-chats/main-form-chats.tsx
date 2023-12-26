@@ -10,7 +10,7 @@ export const MainFormChats = () => {
       <Card className={s.container}>
         <div className={s.mainWrapper}>
           <Sidebar />
-          <Chat name={"Vladimir"} />
+          <Chat />
         </div>
       </Card>
     </div>

@@ -11,6 +11,9 @@ const schema = z
       .trim()
       .email("Invalid email address")
       .nonempty("Enter email"),
+    name: z.string().refine((value) => !/[!@#$%^&*(),.?":{}|<>]/.test(value), {
+      message: "Invalid characters in name",
+    }),
     password: z
       .string()
       .trim()
@@ -30,6 +33,7 @@ export const UseRegisterForm = () => {
     defaultValues: {
       confirmPassword: "",
       email: "",
+      name: "",
       password: "",
     },
     mode: "onSubmit",

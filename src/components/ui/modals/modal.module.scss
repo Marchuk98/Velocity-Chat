@@ -10,7 +10,7 @@
 .content {
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 60%;
   transform: translate(-50%, -50%);
 
   width: 33.875rem;
@@ -31,6 +31,7 @@
 }
 
 .closeIcon {
+  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
