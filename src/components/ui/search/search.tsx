@@ -1,15 +1,13 @@
+import { MainLoader } from "@/assets/loaders/main-loader";
 import { TextField, Typography } from "@/components/ui";
 import { UserAvatar } from "@/components/ui/avatar/avatar";
 import { UseSearch } from "@/services/auth/hooks/useSearch";
 
 import s from "./search.module.scss";
 
-type SearchPropsType = {
-  name?: string;
-};
-
-export const Search = ({ name }: SearchPropsType) => {
-  const { handleKey, handleSelect, setUsername, user, username } = UseSearch();
+export const Search = () => {
+  const { handleKey, handleSelect, loading, setUsername, user, username } =
+    UseSearch();
 
   return (
     <div className={s.search}>
@@ -22,15 +20,20 @@ export const Search = ({ name }: SearchPropsType) => {
           value={username}
         />
       </div>
-      {user && (
-        <div className={s.userChat} onClick={handleSelect}>
-          <UserAvatar name={user.displayName} src={user.avatar} />
-          <div className={s.userChatInfo}>
-            <Typography as={"span"} variant={"body_2"}>
-              {user.displayName}
-            </Typography>
+
+      {loading ? (
+        <MainLoader />
+      ) : (
+        user && (
+          <div className={s.userChat} onClick={handleSelect}>
+            <UserAvatar name={user.displayName} src={user.photoURL} />
+            <div className={s.userChatInfo}>
+              <Typography as={"span"} variant={"body_2"}>
+                {user.displayName}
+              </Typography>
+            </div>
           </div>
-        </div>
+        )
       )}
     </div>
   );
