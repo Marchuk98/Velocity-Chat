@@ -1,6 +1,6 @@
 import { CSSProperties, ComponentProps } from "react";
 
-import * as AvatarRadix from "@radix-ui/react-avatar";
+import * as AvatarRadix from '@radix-ui/react-avatar'
 import { clsx } from "clsx";
 
 import s from "./avatar.module.scss";
