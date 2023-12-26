@@ -1,10 +1,12 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
-import PaperClip from "@/assets/icons/Paper-Clip";
 import Picture from "@/assets/icons/Picture";
+import { MainLoader } from "@/assets/loaders/main-loader";
+import { AddImageTextModal } from "@/components/modals-actions/add-image-text-modal/add-image-text-modal";
 import { Button, TextField } from "@/components/ui";
-import { auth, db, storage } from "@/services/firebase/firebase";
-import { useAppSelector } from "@/services/store/store";
+import { auth, db } from "@/services/firebase/firebase";
+import { setMessageText } from "@/services/slice/chat.slice";
+import { useAppDispatch, useAppSelector } from "@/services/store/store";
 import {
   Timestamp,
   arrayUnion,
@@ -12,27 +14,30 @@ import {
   getDoc,
   serverTimestamp,
   setDoc,
-  updateDoc,
+  updateDoc
 } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { v4 as uuid } from "uuid";
 
 import s from "./entry-block.module.scss";
 
 export const EntryBlock = () => {
-  const [text, setText] = useState<string>("");
-  const [images, setImages] = useState<File | null>();
   const chatId = useAppSelector((state) => state.chatId);
   const userId = useAppSelector((state) => state.user.uid);
-
-  const handleChangeFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.currentTarget.files) {
-      setImages(e.currentTarget.files[0]);
-    }
+  const text = useAppSelector((state) => state.text);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOpenAddImageText, setIsOpenAddImageText] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setMessageText(e.currentTarget.value));
   };
 
-  const handleSend = async () => {
+  const handleSend = async (messageData: any) => {
     const currentUser = auth.currentUser;
+    if (!messageData.cover && (!text || !text.trim()) && (!messageData.text || !messageData.text.trim())) {
+      return;
+    }
+
+    setIsLoading(true);
 
     if (!currentUser || !chatId) {
       return;
@@ -49,75 +54,62 @@ export const EntryBlock = () => {
       const messageObject = {
         date: Timestamp.now(),
         id: uuid(),
+        img: messageData.cover || "",
         senderId: currentUser.uid,
-        text,
+        text: messageData.text || text
       };
 
-      if (images) {
-        const storageRef = ref(storage, uuid());
-        const uploadTask = uploadBytesResumable(storageRef, images);
-
-        uploadTask.on("state_changed", async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-          await updateDoc(chatDocRef, {
-            messages: arrayUnion({
-              ...messageObject,
-              img: downloadURL,
-            }),
-          });
-        });
-      } else {
-        await updateDoc(chatDocRef, {
-          messages: arrayUnion(messageObject),
-        });
-      }
+      await updateDoc(chatDocRef, {
+        messages: arrayUnion(messageObject)
+      });
 
       await updateDoc(doc(db, "userChat", currentUser.uid), {
         [chatId + ".date"]: serverTimestamp(),
-        [chatId + ".lastMessage"]: {
-          text,
-        },
+        [chatId + ".lastMessage"]: { text }
       });
 
       await updateDoc(doc(db, "userChat", userId), {
         [chatId + ".date"]: serverTimestamp(),
-        [chatId + ".lastMessage"]: {
-          text,
-        },
+        [chatId + ".lastMessage"]: { text }
       });
 
-      setText("");
-      setImages(null);
+      dispatch(setMessageText(""));
+      setIsLoading(false);
     } catch (error) {
       console.error("Ошибка при отправке сообщения:", error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    e.code === "Enter" && handleSend({});
   };
 
   return (
     <div className={s.entryBlock}>
       <TextField
         className={s.sendTextField}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setText(e.currentTarget.value)
-        }
+        onChange={handleTextChange}
+        onKeyDown={handleKey}
         placeholder={"Type something"}
         type={"text"}
         value={text}
       />
       <div className={s.send}>
-        <label>
-          <PaperClip />
-        </label>
-        <TextField
-          id={"file"}
-          onChange={handleChangeFiles}
-          style={{ display: "none" }}
-          type={"file"}
+        <AddImageTextModal
+          isOpenAddImageText={isOpenAddImageText}
+          onSubmitHandler={(data) => handleSend(data)}
+          setIsOpenAddImageText={setIsOpenAddImageText}
+          title={"Отправить изображение"}
+          trigger={
+            <div>
+              <Picture />
+            </div>
+          }
         />
-        <label htmlFor={"file"}>
-          <Picture />
-        </label>
+        {isLoading && <MainLoader />}
         <Button className={s.sendButton} onClick={handleSend} variant={"link"}>
           Send
         </Button>
