@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { MainLoader } from "@/assets/loaders/main-loader";
 import { formatCustomDate } from "@/common/constants/formatCustomDate";
 import { Message } from "@/components/ui/dialogs/message/message";
 import { db } from "@/services/firebase/firebase";
@@ -43,34 +44,29 @@ export const Dialogs = () => {
     };
   }, [chatId]);
 
-  const isChatSelected = !!chatId;
-  const hasMessages = messages.messages && messages.messages.length > 0;
+  const mappedDialogs = messages.messages?.map((m) => {
+    const formattedDate = m.date ? formatCustomDate(m.date.toDate()) : "";
+
+    return (
+      <Message
+        date={formattedDate}
+        img={m.img}
+        key={m.id}
+        senderId={m.senderId}
+        text={m.text}
+      />
+    );
+  });
 
   return (
     <div className={s.dialogs}>
       {isLoading ? (
-        <div>Loading...</div>
+        <MainLoader />
       ) : (
         <>
-          {isChatSelected ? (
-            hasMessages ? (
-              messages.messages?.map((m) => (
-                <Message
-                  date={formatCustomDate(m.date.toDate())}
-                  img={m.img}
-                  key={m.id}
-                  senderId={m.senderId}
-                  text={m.text}
-                />
-              ))
-            ) : (
-              <div className={s.dialogsChats}>
-                Поздоровайтесь с собеседником
-              </div>
-            )
-          ) : (
-            <div className={s.dialogsChats}>Выберите чат</div>
-          )}
+          <div className={s.dialogsChats}>
+            {mappedDialogs || "No dialogs available"}
+          </div>
         </>
       )}
     </div>
