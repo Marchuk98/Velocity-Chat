@@ -21,7 +21,10 @@
       max-width: max-content;
     }
     img {
-      width: 50%;
+      height: 208px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 0.125rem;
     }
   }
 

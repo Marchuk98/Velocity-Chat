@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 
+import { useImageOpen } from "@/common/constants/useImageOpen";
+import { ImageModal } from "@/components/modals-actions/image-modal/image-modal";
 import { Typography } from "@/components/ui";
 import { UserAvatar } from "@/components/ui/avatar/avatar";
+import { BlurHashCanvas } from "@/components/ui/image/blur-hash-image";
 import { auth } from "@/services/firebase/firebase";
 import { useAppSelector } from "@/services/store/store";
 
@@ -18,14 +21,26 @@ export const Message = ({ date, img, senderId, text }: MessagePropsType) => {
   const userInfo = useAppSelector((state) => state.user.photoURL);
   const ref = useRef<HTMLDivElement>(null);
 
+  const { image, isImageModalOpen, openImageInModal, setImageModalOpen } =
+    useImageOpen();
+
+  const scrollIntoView = () => {
+    const messageContainer = ref.current as HTMLDivElement;
+    const lastMessage = messageContainer.lastElementChild as HTMLElement | null;
+
+    if (lastMessage) {
+      lastMessage.scrollIntoView();
+    }
+  };
+
   useEffect(() => {
-    ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [senderId, text, img]);
+    scrollIntoView();
+  }, [text, img]);
 
   const currentUser = auth.currentUser;
 
   if (!currentUser) {
-    return;
+    return null;
   }
 
   return (
@@ -33,6 +48,12 @@ export const Message = ({ date, img, senderId, text }: MessagePropsType) => {
       className={`${s.message} ${senderId === currentUser.uid ? s.owner : ""}`}
       ref={ref}
     >
+      <ImageModal
+        alt={"image-modal"}
+        isOpen={isImageModalOpen}
+        setIsOpen={setImageModalOpen}
+        src={image}
+      />
       <div className={s.messageInfo}>
         <UserAvatar
           name={userInfo}
@@ -51,7 +72,19 @@ export const Message = ({ date, img, senderId, text }: MessagePropsType) => {
         <Typography as={"p"} color={"tertiary"} variant={"body_2"}>
           {text}
         </Typography>
-        {img && <img alt={""} src={img} />}
+        {img && (
+          <div
+            onClick={() => openImageInModal(img)}
+            style={{ cursor: "pointer" }}
+          >
+            <BlurHashCanvas
+              alt={"message-image"}
+              blurHeight={100}
+              blurWidth={100}
+              src={img}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
