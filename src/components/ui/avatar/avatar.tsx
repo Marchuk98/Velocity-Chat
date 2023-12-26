@@ -8,12 +8,13 @@ import s from "./avatar.module.scss";
 export type UserAvatarProps = {
   className?: string;
   name: string;
+  onClick?: () => void;
   size?: CSSProperties["width"];
   src?: ComponentProps<"img">["src"];
 };
 
 export const UserAvatar = (props: UserAvatarProps) => {
-  const { className, name, size = "3rem", src } = props;
+  const { className, name, onClick, size = "3rem", src } = props;
 
   const fallbackText = name?.slice(0, 2).toUpperCase();
   const avatarSize = { height: size, width: size };
@@ -24,8 +25,18 @@ export const UserAvatar = (props: UserAvatarProps) => {
     icon: s.icon,
   };
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
-    <AvatarRadix.Root className={classNames.avatarRoot} tabIndex={0}>
+    <AvatarRadix.Root
+      className={classNames.avatarRoot}
+      onClick={handleClick}
+      tabIndex={0}
+    >
       <AvatarRadix.Image
         alt={"user avatar"}
         className={classNames.avatar}
