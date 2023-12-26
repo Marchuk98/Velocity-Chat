@@ -1,6 +1,6 @@
 import { CSSProperties, ComponentProps } from "react";
 
-import * as AvatarRadix from '@radix-ui/react-avatar'
+import * as Avatar from "@radix-ui/react-avatar";
 import { clsx } from "clsx";
 
 import s from "./avatar.module.scss";
@@ -32,20 +32,20 @@ export const UserAvatar = (props: UserAvatarProps) => {
   };
 
   return (
-    <AvatarRadix.Root
+    <Avatar.Root
       className={classNames.avatarRoot}
       onClick={handleClick}
       tabIndex={0}
     >
-      <AvatarRadix.Image
+      <Avatar.Image
         alt={"user avatar"}
         className={classNames.avatar}
         src={src}
         style={avatarSize}
       />
-      <AvatarRadix.Fallback className={classNames.fallback} style={avatarSize}>
+      <Avatar.Fallback className={classNames.fallback} style={avatarSize}>
         {fallbackText}
-      </AvatarRadix.Fallback>
-    </AvatarRadix.Root>
+      </Avatar.Fallback>
+    </Avatar.Root>
   );
 };
